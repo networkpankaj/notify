@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Request Form</title>
+</head>
+<body>
+    <h2>Leave Request Form</h2>
+    <form id="leaveForm">
+        <label for="message">Reason for Leave:</label><br>
+        <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('leaveForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const message = document.getElementById('message').value;
+
+            try {
+                const response = await fetch('/api/submit-form', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message })
+                });
+
+                if (response.ok) {
+                    alert('Leave request submitted successfully.');
+                    window.location.href = '/index.html'; 
+                } else {
+                    alert('Failed to submit leave request.');
+                }
+            } catch (error) {
+                console.error('Error submitting leave request:', error);
+                alert('Error submitting leave request. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

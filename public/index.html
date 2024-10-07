@@ -1,0 +1,44 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notification Bell Example</title>
+</head>
+<body>
+  <h1>Notification Bell Example</h1>
+
+  <!-- Notification Bell -->
+  <div id="notificationBell">
+    <span id="notificationCount">0</span>
+    <div id="notificationDropdown">
+      <ul id="notificationList">
+        <!-- Notifications will appear here -->
+      </ul>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    socket.on('newLeaveRequest', () => {
+      const notificationBell = document.getElementById('notificationBell');
+      const notificationCount = document.getElementById('notificationCount');
+      const notificationList = document.getElementById('notificationList');
+
+      // Update notification count
+      notificationCount.textContent = parseInt(notificationCount.textContent) + 1;
+
+      // Add new notification to dropdown
+      const newNotification = document.createElement('li');
+      newNotification.textContent = 'New leave request submitted';
+      notificationList.appendChild(newNotification);
+
+      // Show notification bell dropdown
+      notificationBell.classList.add('active');
+    });
+  </script>
+</body>
+</html>
